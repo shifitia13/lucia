@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para alguien especial 💖</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffe6f0;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    transition: background-color 2s ease, color 2s ease;
+}
+
+body.noche {
+    background-color: #0b0014;
+    color: #ffd6eb;
+}
+
+h1 {
+    color: #d63384;
+    font-size: 2.2rem;
+    margin-bottom: 30px;
+}
+
+body.noche h1 {
+    color: #ffb3dd;
+}
+
+/* BOTONES */
+#botones {
+    position: relative;
+    height: 160px;
+}
+
+button {
+    font-size: 1.2rem;
+    padding: 14px 30px;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+}
+
+#si {
+    background-color: #ff4d88;
+    color: white;
+}
+
+#no {
+    background-color: #cccccc;
+    position: absolute;
+}
+
+/* ESTRELLAS */
+.estrella {
+    position: fixed;
+    top: -10%;
+    color: #fff6cc;
+    animation: caer 8s linear infinite;
+    opacity: 0.8;
+}
+
+@keyframes caer {
+    to {
+        top: 110%;
+        transform: translateX(80px);
+        opacity: 0;
+    }
+}
+
+/* SOBRE */
+.sobre {
+    width: 260px;
+    height: 170px;
+    background: #ff9ecf;
+    margin: 40px auto;
+    border-radius: 14px;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(255, 158, 207, 0.6);
+    animation: aparecer 2s ease;
+}
+
+.sobre::before {
+    content: "💌 Toca la carta";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #6b003a;
+}
+
+/* CARTA */
+.carta {
+    display: none;
+    max-width: 620px;
+    margin: 30px auto;
+    background: #1a0026;
+    padding: 28px;
+    border-radius: 18px;
+    line-height: 1.7;
+    font-size: 1.2rem;
+    animation: aparecer 2s ease;
+}
+
+/* CONTADOR */
+#contador {
+    margin-top: 30px;
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* ANIMACIONES */
+@keyframes aparecer {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 480px) {
+    h1 { font-size: 1.9rem; }
+    .carta { font-size: 1.1rem; }
+}
+</style>
+</head>
+
+<body>
+
+<h1 id="texto">Lucía 💕 ¿Puedo ser tu novio?</h1>
+
+<div id="botones">
+    <button id="si" onclick="respuestaSi()">Sí 💖</button>
+    <button id="no" onclick="respuestaNo()">No 😢</button>
+</div>
+
+<script>
+const textosNo = [
+    "¿Estás segura? 🥺",
+    "Piénsalo bien 💔",
+    "No juegues con mi corazón 😭",
+    "Sabes que me quieres 😏",
+    "Última oportunidad 😈"
+];
+
+let contadorNo = 0;
+const botonNo = document.getElementById("no");
+
+function respuestaNo() {
+    if (contadorNo < textosNo.length) {
+        document.getElementById("texto").innerText = textosNo[contadorNo];
+        botonNo.style.left = Math.random() * (window.innerWidth - 120) + "px";
+        botonNo.style.top = Math.random() * 120 + "px";
+        contadorNo++;
+    }
+}
+
+function respuestaSi() {
+    document.body.classList.add("noche");
+
+    document.body.innerHTML = `
+        <h1>💫 Hasta que no queden estrellas que contar 💫</h1>
+
+        <div class="sobre" onclick="abrirCarta()"></div>
+
+        <div class="carta" id="carta">
+            <strong>Lucía, mi vida:</strong><br><br>
+
+            Desde el <strong>9 de julio de 2025</strong>, sin darme cuenta, mi mundo empezó a cambiar contigo.
+            Con cada conversación, cada risa y cada momento compartido,
+            fuiste ocupando un lugar muy especial en mí.<br><br>
+
+            Este año conociéndote me hizo entender muchas cosas,
+            sobre mí y sobre lo que quiero.
+            Me hiciste sentir tranquilidad, ilusión
+            y una felicidad que no se fuerza,
+            que simplemente aparece cuando estás.<br><br>
+
+            Hoy no solo te hago una pregunta.
+            Hoy te hablo desde lo que siento de verdad.<br><br>
+
+            Aceptar esto significa para mí cuidarte,
+            respetarte, caminar a tu lado
+            y seguir construyendo recuerdos contigo,
+            sin prisas pero con intención.<br><br>
+
+            Gracias por hacerme tan feliz,
+            incluso antes de saber la respuesta.
+            Iniciar este nuevo año contigo
+            es algo que valoro más de lo que puedo explicar.<br><br>
+
+            Ojalá podamos formalizarlo aún mejor en el futuro,
+            aunque, siendo sincero,
+            me gustaría que este día
+            ya quedara guardado como
+            <strong>nuestro aniversario</strong>.<br><br>
+
+            Quiero contar estrellas contigo,
+            hasta que no quede ninguna más que contar. ✨<br><br>
+
+            <strong>Te amo mucho, mi vida. 💖</strong>
+        </div>
+
+        <div id="contador"></div>
+    `;
+
+    iniciarEstrellas();
+    iniciarContador();
+}
+
+function abrirCarta() {
+    document.querySelector(".sobre").style.display = "none";
+    document.getElementById("carta").style.display = "block";
+}
+
+/* ESTRELLAS */
+function iniciarEstrellas() {
+    setInterval(() => {
+        const estrella = document.createElement("div");
+        estrella.classList.add("estrella");
+        estrella.innerText = "✨";
+        estrella.style.left = Math.random() * 100 + "vw";
+        estrella.style.fontSize = Math.random() * 18 + 12 + "px";
+        document.body.appendChild(estrella);
+        setTimeout(() => estrella.remove(), 8000);
+    }, 300);
+}
+
+/* CONTADOR */
+function iniciarContador() {
+    const inicio = new Date("2025-07-09T00:00:00");
+
+    setInterval(() => {
+        const ahora = new Date();
+        const diff = ahora - inicio;
+
+        const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutos = Math.floor((diff / (1000 * 60)) % 60);
+        const segundos = Math.floor((diff / 1000) % 60);
+
+        document.getElementById("contador").innerHTML =
+            `⏳ Desde que el universo me cruzó contigo:<br>
+             ${dias} días, ${horas} horas, ${minutos} minutos y ${segundos} segundos 💫`;
+    }, 1000);
+}
+</script>
+
+</body>
+</html>
+
